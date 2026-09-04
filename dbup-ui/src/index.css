@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-dbup-navydark;
+  }
+
+  body {
+    @apply bg-dbup-navydark text-dbup-text;
+    font-family: 'Lato', system-ui, sans-serif;
+    text-rendering: geometricPrecision;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::-webkit-scrollbar        { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track  { @apply bg-dbup-navydark; }
+  ::-webkit-scrollbar-thumb  { @apply bg-dbup-border rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { background: #0de6b4; }
+}
+
+@layer components {
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply px-4 py-2 rounded-md font-bold text-dbup-navydark transition-all
+           disabled:opacity-40 disabled:cursor-not-allowed;
+    background: linear-gradient(90deg, #0de6b4 0%, #0bc9a0 100%);
+  }
+  .btn-primary:not(:disabled):hover {
+    background: linear-gradient(90deg, #0ff5c4 0%, #0de6b4 100%);
+    box-shadow: 0 0 16px rgba(13,230,180,0.35);
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-dbup-card text-dbup-text rounded-md font-medium
+           border border-dbup-border hover:border-dbup-teal hover:text-white transition-colors
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-dbup-text rounded-md font-medium
+           hover:bg-white/5 transition-colors
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply px-4 py-2 text-red-100 rounded-md font-medium
+           border border-red-500/35 bg-red-500/15 hover:bg-red-500/25 transition-colors
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* ── Cards ── */
+  .card {
+    @apply bg-dbup-card border border-dbup-border rounded-lg p-4;
+    box-shadow: 0 10px 30px rgba(4, 8, 24, 0.18);
+  }
+
+  /* ── Inputs ── */
+  .input {
+    @apply w-full bg-dbup-navydark border border-dbup-border rounded-md px-3 py-2
+           text-dbup-text placeholder-dbup-muted
+           focus:outline-none focus:border-dbup-teal focus:ring-1 focus:ring-dbup-teal/40
+           transition-colors;
+  }
+
+  .label {
+    @apply block text-sm font-bold text-dbup-text mb-1;
+  }
+
+  .select {
+    @apply w-full bg-dbup-navydark border border-dbup-border rounded-md px-3 py-2
+           text-dbup-text
+           focus:outline-none focus:border-dbup-teal focus:ring-1 focus:ring-dbup-teal/40
+           transition-colors;
+  }
+
+  /* ── Typography ── */
+  .page-shell { @apply w-full max-w-7xl mx-auto px-5 py-6 lg:px-8 lg:py-8; }
+  .page-title    { @apply text-2xl font-bold text-white mb-6; letter-spacing: 0; }
+  .section-title { @apply text-base font-bold text-white mb-3; }
+
+  .code {
+    @apply font-mono text-sm bg-dbup-navydark border border-dbup-border rounded px-1.5 py-0.5 text-dbup-teal leading-6;
+  }
+
+  /* ── application gradient bar (bottom of sidebar used as a visual accent) ── */
+  .dbup-gradient-bar {
+    height: 3px;
+    background: linear-gradient(90deg, #0de6b4 0%, #cc27b0 100%);
+  }
+
+  /* ── Teal glow effect for active elements ── */
+  .dbup-glow {
+    box-shadow: 0 0 20px rgba(13,230,180,0.2);
+  }
+}

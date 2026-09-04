@@ -1,0 +1,43 @@
+-- Rollback de objetos administrativos DBUP creados por error en un owner/schema incorrecto.
+-- No elimina &&DBUP_USER ni &&DBUP_ROLE.
+--
+-- Ajustar WRONG_DBUP_OWNER al schema donde se hayan creado por error los
+-- objetos administrativos DBUP. Ejemplos:
+--
+--   DEFINE WRONG_DBUP_OWNER = PARAM700
+--   DEFINE WRONG_DBUP_OWNER = ENTIDAD700
+--   DEFINE WRONG_DBUP_OWNER = DBAADQ
+
+SET ECHO ON
+SET DEFINE ON
+SET SERVEROUTPUT ON
+
+DEFINE WRONG_DBUP_OWNER = PARAM700
+
+DECLARE
+  PROCEDURE run_ignore(p_sql VARCHAR2, p_ignore_code NUMBER) IS
+  BEGIN
+    EXECUTE IMMEDIATE p_sql;
+    DBMS_OUTPUT.PUT_LINE('OK: ' || p_sql);
+  EXCEPTION
+    WHEN OTHERS THEN
+      IF SQLCODE = p_ignore_code THEN
+        DBMS_OUTPUT.PUT_LINE('SKIP: ' || p_sql || ' -> ' || SQLERRM);
+      ELSE
+        RAISE;
+      END IF;
+  END;
+BEGIN
+  run_ignore('DROP SYNONYM &&DBUP_USER.DBUP_CHANGELOG', -1434);
+  run_ignore('DROP SYNONYM &&DBUP_USER.DBUP_ALLOWED_CLIENTS', -1434);
+  run_ignore('DROP SYNONYM &&DBUP_USER.DBUP_LOGIN_AUDIT', -1434);
+
+  run_ignore('DROP TRIGGER &&WRONG_DBUP_OWNER..TRG_DBUP_BLOCK_UNTRUSTED_LOGIN', -4080);
+  run_ignore('DROP TRIGGER &&WRONG_DBUP_OWNER..TRG_BLOCK_MANUAL_DDL', -4080);
+  run_ignore('DROP TRIGGER &&WRONG_DBUP_OWNER..TRG_DBUP_CHANGELOG_BI', -4080);
+  run_ignore('DROP TABLE &&WRONG_DBUP_OWNER..DBUP_LOGIN_AUDIT PURGE', -942);
+  run_ignore('DROP TABLE &&WRONG_DBUP_OWNER..DBUP_ALLOWED_CLIENTS PURGE', -942);
+  run_ignore('DROP TABLE &&WRONG_DBUP_OWNER..DBUP_CHANGELOG PURGE', -942);
+  run_ignore('DROP SEQUENCE &&WRONG_DBUP_OWNER..DBUP_CHANGELOG_SEQ', -2289);
+END;
+/

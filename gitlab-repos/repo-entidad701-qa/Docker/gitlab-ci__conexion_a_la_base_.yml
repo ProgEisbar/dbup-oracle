@@ -1,0 +1,12 @@
+stages:
+  - test
+
+test_sqlcl_connection:
+  stage: test
+  image: {DBUP_SQLCL_IMAGE}
+  tags:
+    - {DBUP_RUNNER_TAG}
+  script:
+    - java -version
+    - sql -v
+    - sql -s "${DB_USER}/${DB_PASSWORD}@//${DBUP_DEV_HOST}:${DB_PORT}/${DB_SERVICES_NAME}" @Docker/000_ping.sql

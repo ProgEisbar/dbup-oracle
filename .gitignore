@@ -1,0 +1,29 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+dbup-ui/.env
+
+# Node/Vite outputs
+node_modules/
+dbup-ui/node_modules/
+dist/
+dbup-ui/dist/
+
+# Generated and scratch workspace files
+tmp/
+work/
+.agents/
+*.log
+
+# Local image assets
+dbup-ui/public/*.png
+
+# OS/editor noise
+Thumbs.db
+.DS_Store
+
+# Nested repository metadata from local GitLab clones
+/GitLab/
+/repo-entidad*/
+/repo-entidad*/.git/
